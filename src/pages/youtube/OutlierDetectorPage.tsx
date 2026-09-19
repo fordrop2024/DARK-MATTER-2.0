@@ -38,7 +38,7 @@ export function OutlierDetectorPage() {
           <span>Algorithmic Objective</span>
         </div>
         <p className="text-xs text-slate-300 leading-relaxed">
-          Standard analytics only show absolute views. The MintMind Outlier Engine calculates the ratio between an upload's velocity and its channel's 90-day baseline median. A video with 50,000 views on a 2,000-view channel is a 25x outlier — signaling an exceptional title hook, thumbnail packaging breakthrough, or algorithmic recommendation shift.
+          Standard analytics only show absolute views. The Dark Matter Orbital Outlier Engine calculates the ratio between an upload's velocity and its channel's 90-day baseline median. A video with 50,000 views on a 2,000-view channel is a 25x outlier — signaling an exceptional title hook, thumbnail packaging breakthrough, or algorithmic recommendation shift.
         </p>
       </div>
 

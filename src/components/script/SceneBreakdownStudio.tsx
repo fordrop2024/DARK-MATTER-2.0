@@ -851,7 +851,7 @@ export const SceneBreakdownStudio: React.FC<SceneBreakdownStudioProps> = ({
         <div className="p-8 rounded-2xl bg-slate-900 border border-cyan-500/30 text-center space-y-3 animate-pulse">
           <Wand2 className="w-8 h-8 text-cyan-400 animate-spin mx-auto" />
           <h4 className="text-sm font-bold text-white font-display">
-            MintMind AI Storyboard Engine
+            Dark Matter Visual Core Storyboard Engine
           </h4>
           <p className="text-xs text-cyan-300 font-mono">{generationStep}</p>
         </div>

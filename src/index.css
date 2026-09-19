@@ -5,12 +5,24 @@
     --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
     --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    /* Global Dynamic Core Hue Tokens */
+    --dm-hue: 185;
+    --dm-accent: hsl(var(--dm-hue, 185), 100%, 50%);
+    --dm-accent-bright: hsl(var(--dm-hue, 185), 100%, 65%);
+    --dm-accent-glow: hsla(var(--dm-hue, 185), 100%, 50%, 0.45);
+    --dm-accent-soft: hsla(var(--dm-hue, 185), 100%, 50%, 0.12);
+    --dm-accent-border: hsla(var(--dm-hue, 185), 100%, 50%, 0.38);
+    --dm-accent-energy: hsl(calc(var(--dm-hue, 185) + 35), 100%, 55%);
   }
 
   body {
     font-family: var(--font-sans);
     letter-spacing: -0.01em;
     min-height: 100vh;
+    background-color: #020409;
+    color: #f1f5f9;
+    overflow-x: hidden;
   }
 
   h1, h2, h3, .font-display {
@@ -23,62 +35,71 @@
   }
 }
 
-/* Theme variables and styles */
+/* Theme variables and styles - Spacecraft Engine Palette */
 .theme-dark {
-  --bg-primary: #07090e;
-  --bg-secondary: #0d121d;
-  --bg-surface: #121826;
-  --bg-surface-elevated: #182235;
-  --border-color: rgba(56, 189, 248, 0.14);
-  --border-subtle: rgba(255, 255, 255, 0.08);
+  --bg-primary: #020409;
+  --bg-secondary: #05070D;
+  --bg-surface: #080B12;
+  --bg-surface-elevated: #0C111A;
+  --border-color: var(--dm-accent-border, rgba(56, 189, 248, 0.35));
+  --border-subtle: rgba(56, 189, 248, 0.12);
+  --border-metallic: rgba(148, 163, 184, 0.18);
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
-  --accent-cyan: #38bdf8;
-  --accent-cyan-glow: rgba(56, 189, 248, 0.25);
-  --accent-indigo: #818cf8;
-  --panel-glass: rgba(13, 18, 29, 0.75);
+  --accent-cyan: var(--dm-accent, #38bdf8);
+  --accent-cyan-glow: var(--dm-accent-glow, rgba(56, 189, 248, 0.45));
+  --accent-indigo: hsl(calc(var(--dm-hue, 185) + 30), 85%, 65%);
+  --accent-violet: hsl(calc(var(--dm-hue, 185) + 65), 85%, 65%);
+  --panel-glass: rgba(6, 10, 20, 0.92);
+  --panel-glass-elevated: rgba(9, 14, 28, 0.96);
   background-color: var(--bg-primary);
   color: var(--text-primary);
 }
 
 .theme-light {
-  --bg-primary: #f8fafc;
-  --bg-secondary: #f1f5f9;
-  --bg-surface: #ffffff;
-  --bg-surface-elevated: #ffffff;
-  --border-color: rgba(14, 165, 233, 0.22);
-  --border-subtle: rgba(148, 163, 184, 0.2);
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
+  --bg-primary: #040814;
+  --bg-secondary: #091024;
+  --bg-surface: #0e1732;
+  --bg-surface-elevated: #142044;
+  --border-color: var(--dm-accent-border, rgba(56, 189, 248, 0.38));
+  --border-subtle: rgba(99, 102, 241, 0.18);
+  --border-metallic: rgba(148, 163, 184, 0.22);
+  --text-primary: #ffffff;
+  --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
-  --accent-cyan: #0284c7;
-  --accent-cyan-glow: rgba(2, 132, 199, 0.15);
-  --accent-indigo: #4f46e5;
-  --panel-glass: rgba(255, 255, 255, 0.85);
+  --accent-cyan: var(--dm-accent, #38bdf8);
+  --accent-cyan-glow: var(--dm-accent-glow, rgba(56, 189, 248, 0.45));
+  --accent-indigo: hsl(calc(var(--dm-hue, 185) + 30), 85%, 65%);
+  --accent-violet: hsl(calc(var(--dm-hue, 185) + 65), 85%, 65%);
+  --panel-glass: rgba(9, 16, 36, 0.92);
+  --panel-glass-elevated: rgba(14, 23, 50, 0.96);
   background-color: var(--bg-primary);
   color: var(--text-primary);
 }
 
 .theme-mix {
-  --bg-primary: #0b0f19;
-  --bg-secondary: #111827;
-  --bg-surface: #1e293b;
-  --bg-surface-elevated: #0f172a;
-  --border-color: rgba(99, 102, 241, 0.28);
-  --border-subtle: rgba(255, 255, 255, 0.1);
-  --text-primary: #f1f5f9;
+  --bg-primary: #02050e;
+  --bg-secondary: #070d1e;
+  --bg-surface: #0c142e;
+  --bg-surface-elevated: #121c3f;
+  --border-color: var(--dm-accent-border, rgba(168, 85, 247, 0.38));
+  --border-subtle: rgba(56, 189, 248, 0.18);
+  --border-metallic: rgba(148, 163, 184, 0.2);
+  --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-muted: #64748b;
-  --accent-cyan: #22d3ee;
-  --accent-cyan-glow: rgba(34, 211, 238, 0.2);
-  --accent-indigo: #a5b4fc;
-  --panel-glass: rgba(17, 24, 39, 0.8);
+  --accent-cyan: var(--dm-accent, #22d3ee);
+  --accent-cyan-glow: var(--dm-accent-glow, rgba(34, 211, 238, 0.45));
+  --accent-indigo: hsl(calc(var(--dm-hue, 185) + 30), 85%, 65%);
+  --accent-violet: hsl(calc(var(--dm-hue, 185) + 65), 85%, 65%);
+  --panel-glass: rgba(10, 17, 38, 0.92);
+  --panel-glass-elevated: rgba(15, 24, 52, 0.96);
   background-color: var(--bg-primary);
   color: var(--text-primary);
 }
 
-/* Subtle futuristic background grid pattern */
+/* Spacecraft Cockpit HUD Reticle & Grid */
 .cyber-grid {
   background-size: 40px 40px;
   background-image: 
@@ -86,49 +107,267 @@
     linear-gradient(to bottom, rgba(56, 189, 248, 0.035) 1px, transparent 1px);
 }
 
-.theme-light .cyber-grid {
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, rgba(14, 165, 233, 0.045) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(14, 165, 233, 0.045) 1px, transparent 1px);
+.cockpit-view-lines {
+  background-image:
+    radial-gradient(ellipse 90% 70% at 50% 50%, transparent 60%, rgba(2, 4, 9, 0.85) 100%),
+    linear-gradient(to bottom, rgba(56, 189, 248, 0.015) 50%, rgba(0, 0, 0, 0.35) 51%);
+  background-size: 100% 100%, 100% 4px;
 }
 
-/* Glassmorphism panels */
+/* Space Engine Control Surface Panels */
+.cockpit-panel {
+  background-color: var(--panel-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.05),
+    inset 0 0 20px 0 rgba(0, 0, 0, 0.5),
+    0 10px 30px -10px rgba(0, 0, 0, 0.7);
+  position: relative;
+}
+
+.cockpit-panel-elevated {
+  background-color: var(--panel-glass-elevated);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border-color);
+  box-shadow: 
+    inset 0 1px 0 0 rgba(56, 189, 248, 0.2),
+    inset 0 0 30px 0 rgba(2, 4, 9, 0.8),
+    0 15px 35px -5px rgba(0, 0, 0, 0.8),
+    0 0 25px -5px var(--accent-cyan-glow);
+  position: relative;
+}
+
+.cockpit-panel-interactive {
+  background-color: var(--panel-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.04),
+    0 8px 24px -6px rgba(0, 0, 0, 0.6);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.cockpit-panel-interactive:hover {
+  border-color: var(--border-color);
+  background-color: rgba(12, 18, 30, 0.95);
+  box-shadow: 
+    inset 0 1px 0 0 rgba(56, 189, 248, 0.3),
+    inset 0 0 25px 0 rgba(56, 189, 248, 0.08),
+    0 12px 32px -4px rgba(0, 0, 0, 0.8),
+    0 0 24px -4px var(--accent-cyan-glow);
+  transform: translateY(-2px);
+}
+
+/* Glass panel backward compatibility with enhanced space look */
 .glass-panel {
   background-color: var(--panel-glass);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.06),
+    0 8px 24px -8px rgba(0, 0, 0, 0.7);
 }
 
 .glass-panel-interactive {
   background-color: var(--panel-glass);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border-subtle);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-panel-interactive:hover {
   border-color: var(--border-color);
-  box-shadow: 0 0 20px -5px var(--accent-cyan-glow);
+  box-shadow: 
+    inset 0 1px 0 0 rgba(56, 189, 248, 0.25),
+    0 0 28px -4px var(--accent-cyan-glow);
+}
+
+/* Spacecraft Controls: Buttons & Inputs */
+.btn-warp-primary {
+  background: linear-gradient(135deg, #0284c7 0%, #2563eb 50%, #4f46e5 100%);
+  border: 1px solid rgba(56, 189, 248, 0.6);
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  box-shadow: 
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.3),
+    0 0 20px -2px rgba(56, 189, 248, 0.4);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-warp-primary:hover {
+  background: linear-gradient(135deg, #38bdf8 0%, #3b82f6 50%, #6366f1 100%);
+  border-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.5),
+    0 0 30px 2px rgba(56, 189, 248, 0.6);
+  transform: translateY(-1px);
+}
+
+.btn-cockpit-secondary {
+  background: rgba(8, 13, 24, 0.85);
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  color: #e2e8f0;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-cockpit-secondary:hover {
+  background: rgba(14, 23, 42, 0.95);
+  border-color: rgba(56, 189, 248, 0.5);
+  color: #38bdf8;
+  box-shadow: 0 0 15px -3px rgba(56, 189, 248, 0.3);
+}
+
+.input-cockpit {
+  background: rgba(3, 6, 14, 0.9);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  color: #f8fafc;
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.6);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.input-cockpit:focus {
+  outline: none;
+  border-color: rgba(56, 189, 248, 0.7);
+  box-shadow: 
+    inset 0 2px 4px 0 rgba(0, 0, 0, 0.6),
+    0 0 20px -2px rgba(56, 189, 248, 0.4);
+}
+
+/* HUD Corner Brackets for Spacecraft Instrument Panels */
+.hud-corners {
+  position: relative;
+}
+
+.hud-corners::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 8px;
+  height: 8px;
+  border-top: 2px solid #38bdf8;
+  border-left: 2px solid #38bdf8;
+  pointer-events: none;
+}
+
+.hud-corners::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 8px;
+  height: 8px;
+  border-bottom: 2px solid #38bdf8;
+  border-right: 2px solid #38bdf8;
+  pointer-events: none;
+}
+
+/* Animations: Orbit, Warp, Accretion, Twinkle */
+@keyframes orbital-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes orbital-spin-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes event-horizon-pulse {
+  0%, 100% {
+    opacity: 0.7;
+    transform: scale(0.97);
+    filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.4));
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.03);
+    filter: drop-shadow(0 0 35px rgba(56, 189, 248, 0.8));
+  }
+}
+
+@keyframes warp-streak-fast {
+  0% { transform: scaleY(0.1) translateY(0); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: scaleY(2.5) translateY(200px); opacity: 0; }
+}
+
+@keyframes star-twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+@keyframes photon-ring-flare {
+  0%, 100% { transform: rotate(0deg) scale(1); filter: brightness(1); }
+  50% { transform: rotate(180deg) scale(1.05); filter: brightness(1.35); }
+}
+
+@keyframes telemetry-ping {
+  0% { transform: scale(1); opacity: 0.9; }
+  70% { transform: scale(2.2); opacity: 0; }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+.animate-orbital {
+  animation: orbital-spin 28s linear infinite;
+}
+
+.animate-orbital-reverse {
+  animation: orbital-spin-reverse 36s linear infinite;
+}
+
+.animate-orbital-fast {
+  animation: orbital-spin 8s linear infinite;
+}
+
+.animate-event-horizon {
+  animation: event-horizon-pulse 3.5s ease-in-out infinite;
+}
+
+.animate-photon-ring {
+  animation: photon-ring-flare 6s ease-in-out infinite;
+}
+
+.animate-telemetry-ping {
+  animation: telemetry-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-orbital,
+  .animate-orbital-reverse,
+  .animate-orbital-fast,
+  .animate-event-horizon,
+  .animate-photon-ring,
+  .animate-telemetry-ping {
+    animation: none !important;
+  }
 }
 
 /* Custom cyber scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: rgba(2, 4, 9, 0.8);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.2);
-  border-radius: 3px;
+  background: rgba(56, 189, 248, 0.25);
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(56, 189, 248, 0.4);
+  background: rgba(56, 189, 248, 0.6);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
 }

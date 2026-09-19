@@ -107,7 +107,7 @@ export const ShortsRepurposeStudio: React.FC<ShortsRepurposeStudioProps> = ({
     onNotification?.('Short script edits updated', 'success');
   };
 
-  // Create as new MintMind Script
+  // Create as new Dark Matter Script
   const handleConvertToMintMindScript = async () => {
     if (!onCreateNewScript || !activeShort) return;
     try {
@@ -288,7 +288,7 @@ export const ShortsRepurposeStudio: React.FC<ShortsRepurposeStudioProps> = ({
                 {/* Bottom Metadata & Sound Track */}
                 <div className="relative z-10 space-y-1 text-[10px] text-white pr-10">
                   <div className="font-bold flex items-center gap-1 text-rose-300">
-                    @mintmind.creator • Follow
+                    @darkmatter.flight • Follow
                   </div>
                   <div className="text-slate-300 truncate">
                     {editCta || 'Follow for part 2!'}
@@ -347,7 +347,7 @@ export const ShortsRepurposeStudio: React.FC<ShortsRepurposeStudioProps> = ({
                   className="w-full py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-400 hover:to-pink-500 text-white transition-all flex items-center justify-center gap-2 shadow-lg shadow-rose-500/20"
                 >
                   <Plus className="w-3.5 h-3.5" />
-                  Create As Standalone Script in MintMind
+                  Create As Standalone Script in Dark Matter
                 </button>
               )}
             </div>

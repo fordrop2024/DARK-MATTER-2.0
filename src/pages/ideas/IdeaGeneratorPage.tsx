@@ -852,7 +852,7 @@ export function IdeaGeneratorPage() {
                         {/* Scores Grid */}
                         <div
                           className="flex items-center gap-1.5"
-                          title="MintMind AI algorithmic estimates only. Virality is not guaranteed."
+                          title="Dark Matter AI algorithmic estimates only. Virality is not guaranteed."
                         >
                           <div
                             title="Trend Velocity Index (0-100)"

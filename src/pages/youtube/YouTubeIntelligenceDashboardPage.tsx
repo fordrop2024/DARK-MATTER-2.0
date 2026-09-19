@@ -99,7 +99,7 @@ export function YouTubeIntelligenceDashboardPage() {
             </h1>
 
             <p className="text-sm text-slate-300 leading-relaxed">
-              Real-time platform radar, competitive channel benchmarks, breakout outlier detection, and audience opportunity insights built on MintMind proprietary analytical scoring.
+              Real-time platform radar, competitive channel benchmarks, breakout outlier detection, and audience opportunity insights built on Dark Matter Deep Radar proprietary analytical telemetry.
             </p>
 
             <div className="p-3 rounded-xl bg-amber-950/20 border border-amber-500/30 flex items-center gap-2.5 text-xs text-amber-300">
@@ -211,7 +211,7 @@ export function YouTubeIntelligenceDashboardPage() {
 
                 <div className="pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs">
                   <span className="text-[10px] font-mono text-slate-400">
-                    MintMind Analytical Model
+                    Dark Matter Telemetry Engine
                   </span>
                   <button
                     onClick={() => navigate(section.route)}

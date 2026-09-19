@@ -231,11 +231,11 @@ export function VideoAnalyzerPage() {
                 <Award className="w-4 h-4 text-indigo-400" />
                 <span>Performance Score</span>
               </div>
-              <span className="text-[10px] font-mono text-slate-400">MintMind Metric</span>
+              <span className="text-[10px] font-mono text-slate-400">Dark Matter Telemetry</span>
             </div>
             <div className="text-lg font-mono text-slate-400">--</div>
             <p className="text-[11px] text-slate-400">
-              Internal MintMind score (0-100) weighing baseline multiplier and viral curve.
+              Internal Dark Matter score (0-100) weighing baseline multiplier and orbital viral curve.
             </p>
           </div>
         </div>
@@ -280,7 +280,7 @@ export function VideoAnalyzerPage() {
             <span>Performance Explanation</span>
           </div>
           <p className="text-xs text-slate-400 leading-relaxed">
-            Data connection not configured yet. When connected to the YouTube Data API, MintMind AI will generate an algorithmic post-mortem analyzing why this video performed above or below expectations relative to peer videos in its category.
+            Data connection not configured yet. When connected to the YouTube Data API, Dark Matter AI will generate an algorithmic post-mortem analyzing why this video performed above or below expectations relative to peer videos in its category.
           </p>
         </div>
       </div>

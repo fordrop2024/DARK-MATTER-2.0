@@ -1,6 +1,6 @@
 {
-  "name": "MintMind AI",
-  "description": "MintMind AI - AI Content Operating System. Your AI-powered creator workspace for ideas, scripts, videos, SEO and publishing. Think. Create. Publish.",
+  "name": "DARK MATTER 2.0",
+  "description": "DARK MATTER 2.0 — AI Content Production OS. Futuristic spacecraft AI command center for ideas, scripts, scenes, voice, media, and publishing.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

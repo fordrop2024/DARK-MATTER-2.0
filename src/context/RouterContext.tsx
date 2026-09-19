@@ -4,6 +4,8 @@ import type { AppRoute } from '../types';
 interface RouterContextType {
   currentRoute: AppRoute;
   navigate: (route: AppRoute) => void;
+  isWarping: boolean;
+  triggerWarp: () => void;
 }
 
 const RouterContext = createContext<RouterContextType | undefined>(undefined);
@@ -56,9 +58,26 @@ export function RouterProvider({ children }: { children: React.ReactNode }) {
   };
 
   const [currentRoute, setCurrentRoute] = useState<AppRoute>(getInitialRoute);
+  const [isWarping, setIsWarping] = useState<boolean>(false);
+
+  const triggerWarp = useCallback(() => {
+    setIsWarping(true);
+    setTimeout(() => {
+      setIsWarping(false);
+    }, 420);
+  }, []);
 
   const navigate = useCallback((route: AppRoute) => {
     if (!VALID_ROUTES.includes(route)) return;
+    
+    // Trigger cinematic light-speed warp transition if switching destinations
+    if (route !== currentRoute) {
+      setIsWarping(true);
+      setTimeout(() => {
+        setIsWarping(false);
+      }, 420);
+    }
+
     setCurrentRoute(route);
     try {
       if (window.location.pathname !== route) {
@@ -68,7 +87,7 @@ export function RouterProvider({ children }: { children: React.ReactNode }) {
       // fallback if in restricted frame
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
+  }, [currentRoute]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -83,7 +102,7 @@ export function RouterProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <RouterContext.Provider value={{ currentRoute, navigate }}>
+    <RouterContext.Provider value={{ currentRoute, navigate, isWarping, triggerWarp }}>
       {children}
     </RouterContext.Provider>
   );

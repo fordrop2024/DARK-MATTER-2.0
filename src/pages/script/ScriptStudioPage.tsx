@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   FileText,
   Sparkles,
@@ -97,7 +97,11 @@ const AI_SECTION_ACTIONS: { action: AISectionAction; label: string; icon: string
   { action: 'alternative_angle', label: 'Alternative Angle', icon: '🔀' },
 ];
 
-export function ScriptStudioPage() {
+export interface ScriptStudioPageProps {
+  initialTab?: 'editor' | 'scenes' | 'media' | 'voice' | 'captions' | 'seo' | 'thumbnails' | 'repurpose' | 'publish' | 'film_bible';
+}
+
+export function ScriptStudioPage({ initialTab = 'editor' }: ScriptStudioPageProps) {
   const { navigate } = useRouter();
   const { activeProject } = useProject();
   const { ideas } = useIdea();
@@ -146,7 +150,13 @@ export function ScriptStudioPage() {
   // Active view tab
   const [activeTab, setActiveTab] = useState<
     'editor' | 'scenes' | 'media' | 'voice' | 'captions' | 'seo' | 'thumbnails' | 'repurpose' | 'publish' | 'film_bible'
-  >('editor');
+  >(initialTab);
+
+  useEffect(() => {
+    if (initialTab) {
+      setActiveTab(initialTab);
+    }
+  }, [initialTab]);
   const [mediaSubTab, setMediaSubTab] = useState<'pipeline' | 'library'>('pipeline');
 
   // Audio Sync & Shot Plan State

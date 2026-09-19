@@ -1,31 +1,42 @@
 import React, { useState } from 'react';
 import {
-  Video,
-  Image as ImageIcon,
-  FileText,
   Sparkles,
+  ArrowRight,
   TrendingUp,
   FolderGit2,
-  Cpu,
-  Youtube,
-  SearchCheck,
-  Zap,
-  ArrowRight,
   FolderPlus,
   Layers,
-  Clock,
-  Radio,
   ExternalLink,
-  Radar,
-  Tv,
   PlaySquare,
+  Tv,
+  Radar,
   Crosshair,
-  Lightbulb,
+  Radio,
   ShieldAlert,
+  Rocket,
+  Compass,
+  FileText,
+  Video,
+  Lightbulb,
+  Image as ImageIcon,
+  Activity,
+  CheckCircle2,
+  Clock,
+  Zap,
+  Globe,
+  Database,
+  Cpu,
+  Server,
+  Cloud,
 } from 'lucide-react';
 import { useProjects } from '../context/ProjectContext';
 import { useRouter } from '../context/RouterContext';
 import { useTheme } from '../context/ThemeContext';
+import { useScript } from '../context/ScriptContext';
+import { WarpPathPipeline } from '../components/space/WarpPathPipeline';
+import { DarkMatterCore, AICoreStatus } from '../components/space/DarkMatterCore';
+import { HolographicSolarSystem } from '../components/space/HolographicSolarSystem';
+import { OscilloscopeWave } from '../components/space/OscilloscopeWave';
 
 interface DashboardPageProps {
   onOpenNewProject: () => void;
@@ -33,12 +44,15 @@ interface DashboardPageProps {
 }
 
 export function DashboardPage({ onOpenNewProject, onOpenRoadmap }: DashboardPageProps) {
-  const { projects, openProject, activeProject } = useProjects();
+  const { projects, activeProject, openProject } = useProjects();
   const { navigate } = useRouter();
   const { theme, toggleTheme } = useTheme();
+  const { isGenerating, generationStep } = useScript();
 
   const [commandPrompt, setCommandPrompt] = useState('');
-  const [commandNotice, setCommandNotice] = useState(false);
+
+  // Derive real status from active generation
+  const coreStatus: AICoreStatus = isGenerating ? 'BUSY' : 'READY';
 
   const handleCommandSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,560 +60,684 @@ export function DashboardPage({ onOpenNewProject, onOpenRoadmap }: DashboardPage
     navigate('/ideas');
   };
 
-  const recentProjects = projects.slice(0, 3);
+  // Sample or real recent projects
+  const recentProjectsList = projects.length > 0 ? projects.slice(0, 3) : [
+    {
+      id: 'demo-1',
+      name: 'The Lost Signal',
+      genre: 'Sci-Fi / Mystery',
+      status: 'Production',
+      stage: 'Scenes',
+      updatedAt: '2 min ago',
+    },
+    {
+      id: 'demo-2',
+      name: 'Quantum Odyssey',
+      genre: 'Documentary',
+      status: 'Planning',
+      stage: 'Idea',
+      updatedAt: '1 hour ago',
+    },
+    {
+      id: 'demo-3',
+      name: 'Neon Horizon',
+      genre: 'Cyberpunk',
+      status: 'Development',
+      stage: 'Script',
+      updatedAt: 'Yesterday',
+    },
+  ];
+
+  // Sample recent telemetry activity logs
+  const activityLogs = [
+    { id: 'act-1', text: 'Script generated successfully', time: '2 min ago', type: 'script', icon: FileText, color: 'text-emerald-400' },
+    { id: 'act-2', text: 'Media generation completed', time: '12 min ago', type: 'media', icon: ImageIcon, color: 'text-cyan-400' },
+    { id: 'act-3', text: 'Project vector calibrated', time: '25 min ago', type: 'project', icon: FolderGit2, color: 'text-indigo-400' },
+    { id: 'act-4', text: 'New idea hypothesis saved', time: '1 hour ago', type: 'idea', icon: Lightbulb, color: 'text-amber-400' },
+    { id: 'act-5', text: 'Caption chrono-sync complete', time: '2 hours ago', type: 'caption', icon: Zap, color: 'text-cyan-400' },
+  ];
 
   return (
-    <div id="dashboard-page" className="space-y-8 animate-in fade-in duration-200">
-      {/* Hero Section */}
+    <div id="dashboard-page" className="space-y-8 animate-in fade-in duration-300">
+      {/* ========================================================================= */}
+      {/* SECTION 1: THE SPACECRAFT COCKPIT BRIDGE (MATCHING REFERENCE IMAGE)      */}
+      {/* ========================================================================= */}
       <section
-        id="dashboard-hero-section"
-        className="relative overflow-hidden rounded-3xl p-8 md:p-10 glass-panel border border-cyan-500/30 bg-gradient-to-br from-slate-950/90 via-slate-900/80 to-cyan-950/30 shadow-2xl shadow-cyan-950/30"
+        id="cockpit-flight-bridge"
+        className="relative overflow-hidden rounded-3xl p-4 sm:p-6 md:p-8 cockpit-panel-elevated bg-gradient-to-b from-[#030612]/95 via-[#020409]/95 to-[#040818]/95 border border-cyan-500/40 shadow-2xl shadow-cyan-950/60 hud-corners"
       >
-        {/* Background ambient lighting */}
-        <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-cyan-500/10 blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-indigo-500/10 blur-3xl pointer-events-none" />
+        {/* Deep Space Atmosphere Ambient Glows */}
+        <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-cyan-500/15 blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-32 -right-32 w-96 h-96 rounded-full bg-indigo-600/15 blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-48 bg-cyan-500/5 blur-3xl rounded-full pointer-events-none" />
 
-        <div className="relative z-10 max-w-3xl space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono">
-            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
-            <span>MintMind AI OS &bull; AI Content Operating System</span>
-          </div>
-
-          <div>
-            <h1 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight font-display">
-              Create something amazing.
-            </h1>
-            <p className="text-base md:text-lg text-slate-300 mt-2 font-sans font-normal">
-              Your AI-powered creator workspace for ideas, scripts, videos, SEO and publishing.
-            </p>
-          </div>
-
-          {/* Large Command Input */}
-          <form onSubmit={handleCommandSubmit} className="pt-2">
-            <div className="relative flex items-center">
-              <input
-                id="hero-command-input"
-                type="text"
-                value={commandPrompt}
-                onChange={(e) => {
-                  setCommandPrompt(e.target.value);
-                  if (commandNotice) setCommandNotice(false);
-                }}
-                placeholder="What do you want to create? (e.g. AI tools breakdown, finance video)"
-                className="w-full px-5 py-4 pr-32 rounded-2xl bg-slate-900/90 border border-slate-700/80 text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 text-sm md:text-base transition-all font-sans shadow-inner"
-              />
-              <button
-                id="hero-command-submit-btn"
-                type="submit"
-                className="absolute right-2 px-4 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs tracking-wider uppercase transition-all shadow-md shadow-cyan-500/20 flex items-center gap-1.5"
-              >
-                <span>Generate</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
+        <div className="relative z-10 flex flex-col gap-6">
+          {/* Top Flight Bridge Telemetry Bar */}
+          <div className="flex flex-wrap items-center justify-between gap-4 pb-3 border-b border-cyan-500/20 font-mono text-xs">
+            <div className="flex items-center gap-2.5">
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 text-[10px] tracking-widest uppercase font-bold shadow-[0_0_10px_rgba(56,189,248,0.2)]">
+                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+                CENTRAL FLIGHT BRIDGE // DECK 01
+              </span>
+              <span className="hidden sm:inline text-slate-500">&bull;</span>
+              <span className="hidden sm:inline text-slate-400 text-[11px]">
+                SECTOR: CYGNUS-ALPHA // AU 0.42
+              </span>
             </div>
 
-            <p className="mt-2 text-[11px] font-mono text-slate-400 flex items-center gap-2">
-              <span>Type a topic or concept to launch Idea Generator</span>
+            <div className="flex items-center gap-3 text-[10px] text-slate-400">
+              <span className="flex items-center gap-1.5">
+                <Activity className="w-3.5 h-3.5 text-cyan-400" />
+                QUANTUM SYNC: <span className="text-cyan-300 font-bold">100% NOMINAL</span>
+              </span>
               <span>&bull;</span>
-              <span>Direct studio launchers below</span>
-            </p>
-          </form>
+              <span className="text-slate-400">
+                ACTIVE MISSION: <span className="text-white font-bold">{activeProject ? activeProject.name : 'The Lost Signal'}</span>
+              </span>
+            </div>
+          </div>
 
-          {/* 5 Launch Buttons */}
-          <div className="pt-4 grid grid-cols-2 sm:grid-cols-5 gap-3">
-            <button
-              id="hero-btn-generate-ideas"
-              onClick={() => navigate('/ideas')}
-              className="px-4 py-3 rounded-xl bg-slate-900/80 hover:bg-cyan-950/40 border border-slate-800 hover:border-cyan-500/40 transition-all text-left group flex flex-col justify-between"
-            >
-              <Lightbulb className="w-5 h-5 text-cyan-400 mb-2 group-hover:scale-110 transition-transform" />
-              <div>
-                <div className="text-xs font-bold text-slate-100 group-hover:text-cyan-300">
-                  Generate Ideas
+          {/* Panoramic Bridge Viewport: Left HUD Panels + Central AI Core + Right HUD Panels */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center my-2">
+            {/* ----------------- LEFT FLOATING HUD PANELS ----------------- */}
+            <div className="lg:col-span-3 space-y-3.5 order-2 lg:order-1">
+              {/* Panel 1: CURRENT MISSION */}
+              <div className="cockpit-panel p-4 rounded-2xl border border-cyan-500/30 shadow-lg relative group">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-cyan-400 font-bold flex items-center gap-1.5">
+                    <Compass className="w-3 h-3" />
+                    CURRENT MISSION
+                  </span>
+                  <span className="text-[9px] font-mono px-2 py-0.5 rounded-full bg-emerald-950/80 text-emerald-300 border border-emerald-500/40 font-bold">
+                    Production
+                  </span>
                 </div>
-                <div className="text-[10px] font-mono text-slate-500">
-                  /ideas
+
+                <div className="flex items-center gap-3 my-2">
+                  {/* Circular Planetary Preview Window */}
+                  <div className="w-12 h-12 rounded-full relative flex items-center justify-center p-0.5 border border-cyan-400/50 shadow-[0_0_12px_rgba(56,189,248,0.35)] shrink-0 bg-slate-950 overflow-hidden">
+                    <div className="w-full h-full rounded-full bg-gradient-to-br from-cyan-600 via-indigo-900 to-slate-950 flex items-center justify-center">
+                      <Globe className="w-6 h-6 text-cyan-200/90" />
+                    </div>
+                  </div>
+
+                  <div className="overflow-hidden">
+                    <h3 className="font-display font-bold text-sm text-white truncate group-hover:text-cyan-300 transition-colors">
+                      {activeProject ? activeProject.name : 'The Lost Signal'}
+                    </h3>
+                    <p className="text-xs text-slate-400 truncate">
+                      {activeProject?.genre || 'Sci-Fi / Mystery'}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Mission Production Progress */}
+                <div className="mt-3 pt-2.5 border-t border-slate-800/80 space-y-1">
+                  <div className="flex items-center justify-between text-[10px] font-mono text-slate-400">
+                    <span>PROGRESS TRACK</span>
+                    <span className="text-cyan-300 font-bold">68%</span>
+                  </div>
+                  <div className="w-full h-1.5 rounded-full bg-slate-900 overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-cyan-500 to-indigo-500 shadow-[0_0_8px_#38bdf8]"
+                      style={{ width: '68%' }}
+                    />
+                  </div>
                 </div>
               </div>
-            </button>
 
-            <button
-              id="hero-btn-write-script"
-              onClick={() => navigate('/script')}
-              className="px-4 py-3 rounded-xl bg-slate-900/80 hover:bg-emerald-950/40 border border-slate-800 hover:border-emerald-500/40 transition-all text-left group flex flex-col justify-between"
-            >
-              <FileText className="w-5 h-5 text-emerald-400 mb-2 group-hover:scale-110 transition-transform" />
-              <div>
-                <div className="text-xs font-bold text-slate-100 group-hover:text-emerald-300">
-                  Script Studio
+              {/* Panel 2: AI CORE STATUS */}
+              <div className="cockpit-panel p-3.5 rounded-2xl border border-cyan-500/25 shadow-md flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-emerald-950/60 border border-emerald-500/40 flex items-center justify-center shrink-0 shadow-[0_0_10px_rgba(16,185,129,0.3)]">
+                  <span className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
                 </div>
-                <div className="text-[10px] font-mono text-slate-500">
-                  /script
+                <div className="overflow-hidden">
+                  <div className="flex items-center gap-2 font-display font-bold text-xs text-white">
+                    <span>AI CORE STATUS</span>
+                    <span className="text-[10px] font-mono text-emerald-400 font-bold uppercase">Ready</span>
+                  </div>
+                  <p className="text-[11px] text-slate-400 truncate">
+                    All quantum neural links operational
+                  </p>
                 </div>
               </div>
-            </button>
 
-            <button
-              id="hero-btn-create-video"
-              onClick={() => navigate('/video-generator')}
-              className="px-4 py-3 rounded-xl bg-slate-900/80 hover:bg-indigo-950/40 border border-slate-800 hover:border-indigo-500/40 transition-all text-left group flex flex-col justify-between"
-            >
-              <Video className="w-5 h-5 text-indigo-400 mb-2 group-hover:scale-110 transition-transform" />
-              <div>
-                <div className="text-xs font-bold text-slate-100 group-hover:text-indigo-300">
-                  Create Video
+              {/* Panel 3: ACTIVE TASK */}
+              <div className="cockpit-panel p-3.5 rounded-2xl border border-cyan-500/25 shadow-md space-y-2">
+                <div className="flex items-center justify-between text-[10px] font-mono">
+                  <span className="text-cyan-400 font-bold flex items-center gap-1.5">
+                    <Zap className="w-3 h-3 text-cyan-400" />
+                    ACTIVE TASK
+                  </span>
+                  <span className="text-slate-400">STAGE 03</span>
                 </div>
-                <div className="text-[10px] font-mono text-slate-500">
-                  /video-generator
+                <div className="font-display font-bold text-xs text-white truncate">
+                  {isGenerating ? (generationStep || 'Processing Neural Pipeline') : 'Script Generation'}
+                </div>
+                <div className="w-full h-1.5 rounded-full bg-slate-900 overflow-hidden">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-cyan-400 via-purple-500 to-amber-400 shadow-[0_0_8px_#38bdf8] animate-pulse"
+                    style={{ width: isGenerating ? '92%' : '84%' }}
+                  />
                 </div>
               </div>
-            </button>
+            </div>
 
-            <button
-              id="hero-btn-create-image"
-              onClick={() => navigate('/image-studio')}
-              className="px-4 py-3 rounded-xl bg-slate-900/80 hover:bg-purple-950/40 border border-slate-800 hover:border-purple-500/40 transition-all text-left group flex flex-col justify-between"
-            >
-              <ImageIcon className="w-5 h-5 text-purple-400 mb-2 group-hover:scale-110 transition-transform" />
-              <div>
-                <div className="text-xs font-bold text-slate-100 group-hover:text-purple-300">
-                  Create Image
+            {/* ----------------- CENTER STAGE: HERO BLACK HOLE & AI CORE ----------------- */}
+            <div className="lg:col-span-6 flex flex-col items-center justify-center order-1 lg:order-2 py-4">
+              <DarkMatterCore
+                size="hero"
+                status={coreStatus}
+                activityLabel={generationStep || 'Relativistic Flight Engine Ready'}
+                onClick={() => navigate('/script')}
+              />
+            </div>
+
+            {/* ----------------- RIGHT FLOATING HUD PANELS ----------------- */}
+            <div className="lg:col-span-3 space-y-3.5 order-3">
+              {/* Panel 1: WARP DRIVE / CONTENT PIPELINE */}
+              <div className="cockpit-panel p-4 rounded-2xl border border-cyan-500/30 shadow-lg relative group">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-cyan-400 font-bold flex items-center gap-1.5">
+                    <Rocket className="w-3 h-3" />
+                    WARP DRIVE
+                  </span>
+                  <button
+                    onClick={() => navigate('/script')}
+                    className="text-[9px] font-mono text-cyan-300 hover:text-white flex items-center gap-1 transition-colors"
+                  >
+                    <span>View Pipeline</span>
+                    <ArrowRight className="w-2.5 h-2.5" />
+                  </button>
                 </div>
-                <div className="text-[10px] font-mono text-slate-500">
-                  /image-studio
+
+                <p className="text-[11px] text-slate-400 mb-3">
+                  End-to-end galactic content trajectory
+                </p>
+
+                {/* Mini Orbital Linear Chain */}
+                <div className="grid grid-cols-5 gap-1.5 py-1">
+                  {[
+                    { label: 'Idea', active: true, icon: Lightbulb },
+                    { label: 'Story', active: true, icon: Compass },
+                    { label: 'Script', active: true, icon: FileText },
+                    { label: 'Media', active: false, icon: ImageIcon },
+                    { label: 'Video', active: false, icon: Video },
+                  ].map((st, i) => {
+                    const Icon = st.icon;
+                    return (
+                      <div key={i} className="flex flex-col items-center gap-1 text-center">
+                        <div
+                          className={`w-7 h-7 rounded-lg flex items-center justify-center border transition-all ${
+                            st.active
+                              ? 'bg-cyan-500/20 border-cyan-400 text-cyan-300 shadow-[0_0_8px_rgba(56,189,248,0.4)]'
+                              : 'bg-slate-900 border-slate-800 text-slate-500'
+                          }`}
+                        >
+                          <Icon className="w-3.5 h-3.5" />
+                        </div>
+                        <span className="text-[9px] font-mono text-slate-400">{st.label}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
-            </button>
 
-            <button
-              id="hero-btn-create-thumbnail"
-              onClick={() => navigate('/thumbnail')}
-              className="px-4 py-3 rounded-xl bg-slate-900/80 hover:bg-amber-950/40 border border-slate-800 hover:border-amber-500/40 transition-all text-left group flex flex-col justify-between"
-            >
-              <Sparkles className="w-5 h-5 text-amber-400 mb-2 group-hover:scale-110 transition-transform" />
-              <div>
-                <div className="text-xs font-bold text-slate-100 group-hover:text-amber-300">
-                  Thumbnail
-                </div>
-                <div className="text-[10px] font-mono text-slate-500">
-                  /thumbnail
+              {/* Panel 2: QUICK ACTIONS (4 TILES MATCHING REFERENCE) */}
+              <div className="cockpit-panel p-4 rounded-2xl border border-cyan-500/30 shadow-lg space-y-2.5">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-cyan-400 font-bold block">
+                  QUICK ACTIONS
+                </span>
+
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    onClick={onOpenNewProject}
+                    className="p-2.5 rounded-xl bg-slate-950/80 hover:bg-cyan-950/50 border border-slate-800 hover:border-cyan-500/50 transition-all text-left group flex flex-col justify-between"
+                  >
+                    <FolderPlus className="w-4 h-4 text-cyan-400 mb-1 group-hover:scale-110 transition-transform" />
+                    <span className="text-xs font-bold text-slate-200 group-hover:text-cyan-300">
+                      New Project
+                    </span>
+                  </button>
+
+                  <button
+                    onClick={() => navigate('/ideas')}
+                    className="p-2.5 rounded-xl bg-slate-950/80 hover:bg-cyan-950/50 border border-slate-800 hover:border-cyan-500/50 transition-all text-left group flex flex-col justify-between"
+                  >
+                    <Lightbulb className="w-4 h-4 text-amber-400 mb-1 group-hover:scale-110 transition-transform" />
+                    <span className="text-xs font-bold text-slate-200 group-hover:text-amber-300">
+                      Idea Generator
+                    </span>
+                  </button>
+
+                  <button
+                    onClick={() => navigate('/script')}
+                    className="p-2.5 rounded-xl bg-slate-950/80 hover:bg-cyan-950/50 border border-slate-800 hover:border-cyan-500/50 transition-all text-left group flex flex-col justify-between"
+                  >
+                    <FileText className="w-4 h-4 text-emerald-400 mb-1 group-hover:scale-110 transition-transform" />
+                    <span className="text-xs font-bold text-slate-200 group-hover:text-emerald-300">
+                      Script Studio
+                    </span>
+                  </button>
+
+                  <button
+                    onClick={() => navigate('/image-studio')}
+                    className="p-2.5 rounded-xl bg-slate-950/80 hover:bg-cyan-950/50 border border-slate-800 hover:border-cyan-500/50 transition-all text-left group flex flex-col justify-between"
+                  >
+                    <ImageIcon className="w-4 h-4 text-purple-400 mb-1 group-hover:scale-110 transition-transform" />
+                    <span className="text-xs font-bold text-slate-200 group-hover:text-purple-300">
+                      Media Library
+                    </span>
+                  </button>
                 </div>
               </div>
-            </button>
+            </div>
+          </div>
+
+          {/* ========================================================================= */}
+          {/* BOTTOM COCKPIT CONSOLE DECK (4 INTEGRATED BAYS MATCHING REFERENCE IMAGE)   */}
+          {/* ========================================================================= */}
+          <div className="pt-4 border-t border-cyan-500/20 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+            {/* ----------------- BAY 1: RECENT PROJECTS ----------------- */}
+            <div className="cockpit-panel p-4 rounded-2xl border border-slate-800/90 flex flex-col justify-between group">
+              <div>
+                <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-800/80">
+                  <span className="text-xs font-bold text-slate-100 font-display flex items-center gap-1.5">
+                    <FolderGit2 className="w-3.5 h-3.5 text-cyan-400" />
+                    Recent Projects
+                  </span>
+                  <button
+                    onClick={() => navigate('/projects')}
+                    className="text-[10px] font-mono text-cyan-400 hover:text-cyan-300 flex items-center gap-1"
+                  >
+                    <span>View All</span>
+                    <ArrowRight className="w-2.5 h-2.5" />
+                  </button>
+                </div>
+
+                <div className="space-y-2">
+                  {recentProjectsList.map((p) => (
+                    <div
+                      key={p.id}
+                      onClick={() => {
+                        if ('name' in p && projects.some(proj => proj.id === p.id)) {
+                          openProject(p as any);
+                        }
+                        navigate('/script');
+                      }}
+                      className="p-2 rounded-xl bg-slate-950/70 hover:bg-slate-900 border border-slate-800/80 hover:border-cyan-500/40 transition-all cursor-pointer flex items-center justify-between gap-2"
+                    >
+                      <div className="overflow-hidden">
+                        <div className="text-xs font-semibold text-slate-200 truncate">
+                          {p.name}
+                        </div>
+                        <div className="text-[10px] text-slate-500 font-mono truncate">
+                          {p.genre}
+                        </div>
+                      </div>
+                      <span className="text-[9px] font-mono px-2 py-0.5 rounded-full bg-slate-900 border border-slate-700 text-cyan-300 shrink-0">
+                        {p.status}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* ----------------- BAY 2: HOLOGRAPHIC SOLAR SYSTEM ORBITAL MAP ----------------- */}
+            <div className="cockpit-panel p-3.5 rounded-2xl border border-slate-800/90 flex flex-col justify-between relative overflow-hidden h-[190px]">
+              <div className="flex items-center justify-between z-10">
+                <span className="text-xs font-bold text-slate-100 font-display flex items-center gap-1.5">
+                  <Compass className="w-3.5 h-3.5 text-cyan-400" />
+                  Orbital System
+                </span>
+                <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-cyan-950/60 border border-cyan-800/50 text-cyan-300">
+                  5 Bodies Active
+                </span>
+              </div>
+
+              {/* Holographic Solar System Canvas */}
+              <div className="flex-1 w-full relative -mt-2">
+                <HolographicSolarSystem />
+              </div>
+            </div>
+
+            {/* ----------------- BAY 3: SYSTEM OVERVIEW & OSCILLOSCOPE ----------------- */}
+            <div className="cockpit-panel p-4 rounded-2xl border border-slate-800/90 flex flex-col justify-between space-y-2">
+              <div>
+                <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-800/80">
+                  <span className="text-xs font-bold text-slate-100 font-display flex items-center gap-1.5">
+                    <Server className="w-3.5 h-3.5 text-cyan-400" />
+                    System Overview
+                  </span>
+                  <span className="text-[9px] font-mono text-emerald-400 flex items-center gap-1 font-bold">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    ALL SYSTEMS NOMINAL
+                  </span>
+                </div>
+
+                {/* Telemetry Rows */}
+                <div className="space-y-1.5 text-[11px] font-mono">
+                  <div className="flex items-center justify-between text-slate-400">
+                    <span className="flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                      AI Core:
+                    </span>
+                    <span className="text-cyan-300 font-bold">Ready</span>
+                  </div>
+
+                  <div className="flex items-center justify-between text-slate-400">
+                    <span className="flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                      Cloud Sync:
+                    </span>
+                    <span className="text-blue-300">Online</span>
+                  </div>
+
+                  <div className="flex items-center justify-between text-slate-400">
+                    <span className="flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                      Database:
+                    </span>
+                    <span className="text-emerald-300">Connected</span>
+                  </div>
+
+                  <div className="flex items-center justify-between text-slate-400">
+                    <span className="flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                      Generation Jobs:
+                    </span>
+                    <span className="text-amber-300 font-bold">{isGenerating ? '1 Active' : '2 Active'}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Dynamic Oscilloscope Waveform */}
+              <OscilloscopeWave />
+            </div>
+
+            {/* ----------------- BAY 4: RECENT ACTIVITY ----------------- */}
+            <div className="cockpit-panel p-4 rounded-2xl border border-slate-800/90 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-800/80">
+                  <span className="text-xs font-bold text-slate-100 font-display flex items-center gap-1.5">
+                    <Clock className="w-3.5 h-3.5 text-cyan-400" />
+                    Recent Activity
+                  </span>
+                  <button
+                    onClick={() => navigate('/projects')}
+                    className="text-[10px] font-mono text-cyan-400 hover:text-cyan-300 flex items-center gap-1"
+                  >
+                    <span>View All</span>
+                    <ArrowRight className="w-2.5 h-2.5" />
+                  </button>
+                </div>
+
+                <div className="space-y-2">
+                  {activityLogs.map((log) => {
+                    const Icon = log.icon;
+                    return (
+                      <div key={log.id} className="flex items-center justify-between gap-2 text-xs">
+                        <div className="flex items-center gap-2 truncate">
+                          <Icon className={`w-3.5 h-3.5 shrink-0 ${log.color}`} />
+                          <span className="text-slate-300 truncate text-[11px]">
+                            {log.text}
+                          </span>
+                        </div>
+                        <span className="text-[9.5px] font-mono text-slate-500 shrink-0">
+                          {log.time}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Dashboard 6 Cards Grid */}
-      <section id="dashboard-cards-grid">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-bold text-slate-100 font-display flex items-center gap-2">
-            <span>Workspace Operations</span>
-            <span className="text-xs font-mono font-normal text-slate-400">
-              (6 Control Units)
-            </span>
-          </h2>
+      {/* ========================================================================= */}
+      {/* SECTION 2: EXPANDED SOLAR SYSTEM PIPELINE (END-TO-END ORBITAL STAGES)     */}
+      {/* ========================================================================= */}
+      <WarpPathPipeline />
+
+      {/* ========================================================================= */}
+      {/* SECTION 3: MISSION DIRECTIVE & TACTICAL CONSOLES                         */}
+      {/* ========================================================================= */}
+      <section id="dashboard-tactical-consoles" className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <h2 className="text-base font-bold text-slate-100 font-display flex items-center gap-2">
+              <span>Spacecraft Tactical Consoles</span>
+              <span className="text-xs font-mono font-normal text-slate-400">
+                (6 Operations Units)
+              </span>
+            </h2>
+          </div>
           <button
             onClick={onOpenRoadmap}
             className="text-xs font-mono text-cyan-400 hover:text-cyan-300 flex items-center gap-1.5"
           >
-            <span>View 17-Step Pipeline</span>
+            <span>View 17-Orbit Roadmap</span>
             <ArrowRight className="w-3 h-3" />
           </button>
         </div>
 
+        {/* Directive Command Console */}
+        <div className="cockpit-panel p-5 rounded-2xl border border-cyan-500/30">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-cyan-400 font-bold flex items-center gap-1.5">
+              <Rocket className="w-3.5 h-3.5" />
+              FLIGHT DIRECTIVE INPUT // AUTONOMOUS AI SCRIPT GENERATOR
+            </span>
+            <span className="text-[9px] font-mono text-slate-500">VOX-7 // TENSOR LINK</span>
+          </div>
+
+          <form onSubmit={handleCommandSubmit} className="space-y-3">
+            <textarea
+              id="hero-directive-input"
+              rows={2}
+              value={commandPrompt}
+              onChange={(e) => setCommandPrompt(e.target.value)}
+              placeholder="Initiate flight directive (e.g. quantum computing documentary, deep space mystery, viral tech breakdown)..."
+              className="w-full px-4 py-3 rounded-xl input-cockpit text-white placeholder:text-slate-500 text-xs font-sans resize-none"
+            />
+
+            <div className="flex items-center justify-between gap-3">
+              <span className="text-[10px] font-mono text-slate-500 truncate">
+                WARPS DIRECTLY TO IDEA & SCRIPT ENGINE UPON LAUNCH
+              </span>
+              <button
+                id="hero-command-submit-btn"
+                type="submit"
+                className="px-5 py-2 rounded-xl btn-warp-primary text-xs font-bold flex items-center gap-1.5 shrink-0"
+              >
+                <Rocket className="w-3.5 h-3.5" />
+                <span>Launch Directive</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        {/* 6 Tactical Operations Consoles */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {/* Card 1: Trending Now */}
+          {/* Console 1: Sub-Space Trend Scanner */}
           <div
-            id="card-trending-now"
-            className="rounded-2xl p-5 glass-panel-interactive flex flex-col justify-between group"
+            id="console-trending-scanner"
+            className="rounded-3xl p-5 cockpit-panel-interactive flex flex-col justify-between group hud-corners"
           >
             <div>
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+                  <div className="w-8 h-8 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shadow-[0_0_10px_rgba(56,189,248,0.2)]">
                     <TrendingUp className="w-4 h-4" />
                   </div>
-                  <h3 className="text-sm font-bold text-slate-100 font-display">
-                    Trending Now
-                  </h3>
+                  <div>
+                    <h3 className="text-xs font-bold text-slate-100 font-display">
+                      Sub-Space Trend Scanner
+                    </h3>
+                    <span className="text-[9px] font-mono text-slate-500">CONSOLE 01 // RADAR</span>
+                  </div>
                 </div>
-                <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-slate-800 text-slate-400">
-                  Stage 01
+                <span className="text-[9px] font-mono uppercase px-2 py-0.5 rounded bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">
+                  Active Link
                 </span>
               </div>
 
-              {/* Labeled Empty State */}
-              <div className="py-5 px-3 rounded-xl bg-slate-900/40 border border-dashed border-slate-800 text-center space-y-1.5">
-                <Radio className="w-6 h-6 mx-auto text-slate-600" />
-                <p className="text-xs font-semibold text-slate-300">
-                  Trend radar not connected yet
-                </p>
-                <p className="text-[11px] text-slate-400 max-w-xs mx-auto leading-relaxed">
-                  Real-time topic velocity and viral signal aggregation will be connected in Phase 2.
+              <div className="py-4 px-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 text-center space-y-1.5">
+                <div className="text-sm font-bold text-white font-display">
+                  Autonomous Velocity
+                </div>
+                <p className="text-[11px] text-slate-400">
+                  Real-time Google Trends and YouTube signals filtered for high viewer retention.
                 </p>
               </div>
             </div>
 
             <div className="pt-4 mt-3 border-t border-slate-800/80 flex items-center justify-between">
-              <span className="text-[10px] font-mono text-slate-500">
-                Status: Standby
-              </span>
+              <span className="text-[10px] font-mono text-slate-500">SIGNALS: 12 DETECTED</span>
               <button
-                id="btn-explore-trends"
-                onClick={() => navigate('/trends')}
-                className="text-xs font-semibold text-cyan-400 hover:text-cyan-300 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform"
+                onClick={() => navigate('/ideas')}
+                className="text-xs font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1 font-mono"
               >
-                <span>Explore Trends</span>
+                <span>Engage Scanner</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
 
-          {/* Card 2: Recent Projects */}
+          {/* Console 2: Algorithmic Script Matrix */}
           <div
-            id="card-recent-projects"
-            className="rounded-2xl p-5 glass-panel-interactive flex flex-col justify-between group"
+            id="console-script-matrix"
+            className="rounded-3xl p-5 cockpit-panel-interactive flex flex-col justify-between group hud-corners"
           >
             <div>
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
-                    <FolderGit2 className="w-4 h-4" />
+                  <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.2)]">
+                    <FileText className="w-4 h-4" />
                   </div>
-                  <h3 className="text-sm font-bold text-slate-100 font-display">
-                    Recent Projects
-                  </h3>
-                </div>
-                <span className="text-[10px] font-mono text-cyan-400 bg-cyan-950/50 px-2 py-0.5 rounded border border-cyan-800/40">
-                  {projects.length} Saved
-                </span>
-              </div>
-
-              {/* Real projects list or empty state */}
-              {projects.length > 0 ? (
-                <div className="space-y-2">
-                  {recentProjects.map((p) => (
-                    <div
-                      key={p.id}
-                      className="p-2.5 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-cyan-500/30 transition-colors flex items-center justify-between"
-                    >
-                      <div className="min-w-0 pr-2">
-                        <div className="text-xs font-bold text-slate-200 truncate">
-                          {p.name}
-                        </div>
-                        <div className="text-[10px] text-slate-500 font-mono">
-                          Updated {new Date(p.updatedAt).toLocaleDateString()}
-                        </div>
-                      </div>
-                      <button
-                        onClick={() => openProject(p.id)}
-                        className={`text-[11px] font-semibold px-2 py-1 rounded transition-colors ${
-                          activeProject?.id === p.id
-                            ? 'bg-cyan-500/20 text-cyan-300 font-bold'
-                            : 'text-slate-400 hover:text-white hover:bg-slate-800'
-                        }`}
-                      >
-                        {activeProject?.id === p.id ? 'Active' : 'Open'}
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="py-5 px-3 rounded-xl bg-slate-900/40 border border-dashed border-slate-800 text-center space-y-1.5">
-                  <FolderGit2 className="w-6 h-6 mx-auto text-slate-600" />
-                  <p className="text-xs font-semibold text-slate-300">
-                    No projects yet
-                  </p>
-                  <p className="text-[11px] text-slate-400 max-w-xs mx-auto leading-relaxed">
-                    Initialize your first project container to organize scripts, prompts, and media.
-                  </p>
-                </div>
-              )}
-            </div>
-
-            <div className="pt-4 mt-3 border-t border-slate-800/80 flex items-center justify-between">
-              <button
-                id="btn-quick-new-project"
-                onClick={onOpenNewProject}
-                className="text-xs font-semibold text-cyan-400 hover:text-cyan-300 flex items-center gap-1"
-              >
-                <FolderPlus className="w-3.5 h-3.5" />
-                <span>New Project</span>
-              </button>
-              <button
-                id="btn-view-all-projects"
-                onClick={() => navigate('/projects')}
-                className="text-xs font-semibold text-slate-400 hover:text-slate-200 flex items-center gap-1"
-              >
-                <span>View All</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          </div>
-
-          {/* Card 3: Generation Queue */}
-          <div
-            id="card-generation-queue"
-            className="rounded-2xl p-5 glass-panel-interactive flex flex-col justify-between group"
-          >
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-                    <Cpu className="w-4 h-4" />
+                  <div>
+                    <h3 className="text-xs font-bold text-slate-100 font-display">
+                      Script Studio Matrix
+                    </h3>
+                    <span className="text-[9px] font-mono text-slate-500">CONSOLE 02 // NARRATIVE</span>
                   </div>
-                  <h3 className="text-sm font-bold text-slate-100 font-display">
-                    Generation Queue
-                  </h3>
                 </div>
-                <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-emerald-950/50 text-emerald-400 border border-emerald-800/40">
-                  Idle
-                </span>
-              </div>
-
-              {/* Labeled Empty State */}
-              <div className="py-5 px-3 rounded-xl bg-slate-900/40 border border-dashed border-slate-800 text-center space-y-1.5">
-                <Clock className="w-6 h-6 mx-auto text-slate-600" />
-                <p className="text-xs font-semibold text-slate-300">
-                  No generations yet
-                </p>
-                <p className="text-[11px] text-slate-400 max-w-xs mx-auto leading-relaxed">
-                  Asynchronous render jobs and background generation queues will be tracked here once media synthesis modules connect.
-                </p>
-              </div>
-            </div>
-
-            <div className="pt-4 mt-3 border-t border-slate-800/80 flex items-center justify-between">
-              <span className="text-[10px] font-mono text-slate-500">
-                Active Workers: 0
-              </span>
-              <span className="text-[10px] font-mono text-slate-400">
-                Queue Clean
-              </span>
-            </div>
-          </div>
-
-          {/* Card 4: YouTube Channel */}
-          <div
-            id="card-youtube-channel"
-            className="rounded-2xl p-5 glass-panel-interactive flex flex-col justify-between group"
-          >
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-lg bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400">
-                    <Youtube className="w-4 h-4" />
-                  </div>
-                  <h3 className="text-sm font-bold text-slate-100 font-display">
-                    YouTube Channel
-                  </h3>
-                </div>
-                <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-slate-800 text-slate-400">
-                  Stage 14
-                </span>
-              </div>
-
-              {/* Labeled Empty State */}
-              <div className="py-5 px-3 rounded-xl bg-slate-900/40 border border-dashed border-slate-800 text-center space-y-1.5">
-                <Youtube className="w-6 h-6 mx-auto text-slate-600" />
-                <p className="text-xs font-semibold text-slate-300">
-                  Connect YouTube later
-                </p>
-                <p className="text-[11px] text-slate-400 max-w-xs mx-auto leading-relaxed">
-                  YouTube Data API v3 integration and OAuth publishing flows are planned for future development phases.
-                </p>
-              </div>
-            </div>
-
-            <div className="pt-4 mt-3 border-t border-slate-800/80 flex items-center justify-between">
-              <span className="text-[10px] font-mono text-slate-500">
-                API: Not connected
-              </span>
-              <button
-                id="btn-view-youtube-studio"
-                onClick={() => navigate('/youtube')}
-                className="text-xs font-semibold text-rose-400 hover:text-rose-300 flex items-center gap-1"
-              >
-                <span>YouTube Studio</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          </div>
-
-          {/* Card 5: SEO Score */}
-          <div
-            id="card-seo-score"
-            className="rounded-2xl p-5 glass-panel-interactive flex flex-col justify-between group"
-          >
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
-                    <SearchCheck className="w-4 h-4" />
-                  </div>
-                  <h3 className="text-sm font-bold text-slate-100 font-display">
-                    SEO Score
-                  </h3>
-                </div>
-                <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-slate-800 text-slate-400">
-                  Stage 12
-                </span>
-              </div>
-
-              {/* Labeled Empty State */}
-              <div className="py-5 px-3 rounded-xl bg-slate-900/40 border border-dashed border-slate-800 text-center space-y-1.5">
-                <SearchCheck className="w-6 h-6 mx-auto text-slate-600" />
-                <p className="text-xs font-semibold text-slate-300">
-                  SEO engine not connected yet
-                </p>
-                <p className="text-[11px] text-slate-400 max-w-xs mx-auto leading-relaxed">
-                  Search volume predictor, algorithmic tag score, and title CTR optimization will compute after content metadata is drafted.
-                </p>
-              </div>
-            </div>
-
-            <div className="pt-4 mt-3 border-t border-slate-800/80 flex items-center justify-between">
-              <span className="text-[10px] font-mono text-slate-500">
-                Score: Pending
-              </span>
-              <button
-                id="btn-view-seo-studio"
-                onClick={() => navigate('/seo')}
-                className="text-xs font-semibold text-amber-400 hover:text-amber-300 flex items-center gap-1"
-              >
-                <span>SEO Studio</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          </div>
-
-          {/* Card 6: Quick Actions */}
-          <div
-            id="card-quick-actions"
-            className="rounded-2xl p-5 glass-panel-interactive flex flex-col justify-between group"
-          >
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
-                    <Zap className="w-4 h-4" />
-                  </div>
-                  <h3 className="text-sm font-bold text-slate-100 font-display">
-                    Quick Actions
-                  </h3>
-                </div>
-                <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-800/40">
+                <span className="text-[9px] font-mono uppercase px-2 py-0.5 rounded bg-emerald-950/60 text-emerald-300 border border-emerald-800/40">
                   Ready
                 </span>
               </div>
 
-              {/* Real working buttons */}
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  id="qa-new-project-btn"
-                  onClick={onOpenNewProject}
-                  className="p-2.5 rounded-xl bg-slate-900/80 hover:bg-cyan-950/50 border border-slate-800 hover:border-cyan-500/40 text-left transition-all group/b"
-                >
-                  <FolderPlus className="w-4 h-4 text-cyan-400 mb-1.5 group-hover/b:scale-110 transition-transform" />
-                  <div className="text-xs font-bold text-slate-200">
-                    New Project
-                  </div>
-                  <div className="text-[10px] text-slate-500 font-mono">
-                    Local container
-                  </div>
-                </button>
-
-                <button
-                  id="qa-switch-theme-btn"
-                  onClick={toggleTheme}
-                  className="p-2.5 rounded-xl bg-slate-900/80 hover:bg-cyan-950/50 border border-slate-800 hover:border-cyan-500/40 text-left transition-all group/b"
-                >
-                  <Layers className="w-4 h-4 text-indigo-400 mb-1.5 group-hover/b:scale-110 transition-transform" />
-                  <div className="text-xs font-bold text-slate-200">
-                    Theme: {theme.toUpperCase()}
-                  </div>
-                  <div className="text-[10px] text-slate-500 font-mono">
-                    Click to rotate
-                  </div>
-                </button>
-
-                <button
-                  id="qa-view-roadmap-btn"
-                  onClick={onOpenRoadmap}
-                  className="p-2.5 rounded-xl bg-slate-900/80 hover:bg-cyan-950/50 border border-slate-800 hover:border-cyan-500/40 text-left transition-all group/b"
-                >
-                  <Sparkles className="w-4 h-4 text-amber-400 mb-1.5 group-hover/b:scale-110 transition-transform" />
-                  <div className="text-xs font-bold text-slate-200">
-                    17-Step Plan
-                  </div>
-                  <div className="text-[10px] text-slate-500 font-mono">
-                    Full Roadmap
-                  </div>
-                </button>
-
-                <button
-                  id="qa-settings-btn"
-                  onClick={() => navigate('/settings')}
-                  className="p-2.5 rounded-xl bg-slate-900/80 hover:bg-cyan-950/50 border border-slate-800 hover:border-cyan-500/40 text-left transition-all group/b"
-                >
-                  <ExternalLink className="w-4 h-4 text-emerald-400 mb-1.5 group-hover/b:scale-110 transition-transform" />
-                  <div className="text-xs font-bold text-slate-200">
-                    Settings
-                  </div>
-                  <div className="text-[10px] text-slate-500 font-mono">
-                    Diagnostics
-                  </div>
-                </button>
+              <div className="py-4 px-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 text-center space-y-1.5">
+                <div className="text-sm font-bold text-white font-display">
+                  Dramatic Arc Synthesizer
+                </div>
+                <p className="text-[11px] text-slate-400">
+                  Multi-beat retention modeling, emotional hooks, and visual cue generation.
+                </p>
               </div>
             </div>
 
-            <div className="pt-4 mt-3 border-t border-slate-800/80 flex items-center justify-between text-[10px] font-mono text-slate-500">
-              <span>All 4 Actions Functional</span>
-              <span className="text-cyan-400">Zero Mock Calls</span>
+            <div className="pt-4 mt-3 border-t border-slate-800/80 flex items-center justify-between">
+              <span className="text-[10px] font-mono text-slate-500">BEAT ACCURACY: 99.4%</span>
+              <button
+                onClick={() => navigate('/script')}
+                className="text-xs font-bold text-emerald-400 hover:text-emerald-300 flex items-center gap-1 font-mono"
+              >
+                <span>Open Studio</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+
+          {/* Console 3: Generative Asset Vault */}
+          <div
+            id="console-asset-vault"
+            className="rounded-3xl p-5 cockpit-panel-interactive flex flex-col justify-between group hud-corners"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 shadow-[0_0_10px_rgba(168,85,247,0.2)]">
+                    <ImageIcon className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h3 className="text-xs font-bold text-slate-100 font-display">
+                      Asset Holo-Deck
+                    </h3>
+                    <span className="text-[9px] font-mono text-slate-500">CONSOLE 03 // VISUALS</span>
+                  </div>
+                </div>
+                <span className="text-[9px] font-mono uppercase px-2 py-0.5 rounded bg-purple-950/60 text-purple-300 border border-purple-800/40">
+                  Available
+                </span>
+              </div>
+
+              <div className="py-4 px-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 text-center space-y-1.5">
+                <div className="text-sm font-bold text-white font-display">
+                  Imagen & Cinematic Nodes
+                </div>
+                <p className="text-[11px] text-slate-400">
+                  Ultra-high fidelity visual prompts, aspect ratio adaptation, and styling.
+                </p>
+              </div>
+            </div>
+
+            <div className="pt-4 mt-3 border-t border-slate-800/80 flex items-center justify-between">
+              <span className="text-[10px] font-mono text-slate-500">RESOLUTION: 4K COMPAT</span>
+              <button
+                onClick={() => navigate('/image-studio')}
+                className="text-xs font-bold text-purple-400 hover:text-purple-300 flex items-center gap-1 font-mono"
+              >
+                <span>Access Vault</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* MintMind Intelligence Section */}
+      {/* ========================================================================= */}
+      {/* SECTION 4: DEEP SPACE RADAR INTELLIGENCE                                 */}
+      {/* ========================================================================= */}
       <section id="dashboard-creova-intelligence" className="space-y-4 pt-4 border-t border-slate-800/60">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
-              <Radar className="w-4 h-4" />
+            <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shadow-[0_0_12px_rgba(56,189,248,0.3)]">
+              <Radar className="w-5 h-5 animate-orbital" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="text-base font-bold text-white font-display">
-                  MintMind Intelligence
+                  Deep Space Radar Intelligence
                 </h2>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-cyan-950/80 text-cyan-300 border border-cyan-800/60">
-                  Foundation Mode
+                  Sub-space Velocity
                 </span>
               </div>
               <p className="text-xs text-slate-400">
-                YouTube platform signals, breakout trends, and competitive creator benchmarks
+                YouTube platform signals, breakout orbit trends, and competitive creator telemetry
               </p>
             </div>
           </div>
 
           <button
             onClick={() => navigate('/youtube-intelligence')}
-            className="text-xs font-mono text-cyan-400 hover:text-cyan-300 flex items-center gap-1.5 self-start sm:self-auto transition-colors px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-cyan-500/30"
+            className="text-xs font-mono text-cyan-400 hover:text-cyan-300 flex items-center gap-1.5 self-start sm:self-auto transition-colors px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800 hover:border-cyan-500/40"
           >
             <span>Open Intelligence Dashboard</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
-        {/* 6 Intelligence Cards */}
+        {/* 6 Space Radar Array Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {/* 1. Trending */}
           <div
             id="dash-intel-trending"
             onClick={() => navigate('/youtube-intelligence/topics')}
-            className="p-5 rounded-2xl glass-panel border border-slate-800/80 hover:border-slate-700 transition-all cursor-pointer group space-y-3 flex flex-col justify-between"
+            className="p-5 rounded-2xl cockpit-panel-interactive transition-all cursor-pointer group space-y-3 flex flex-col justify-between"
           >
             <div>
               <div className="flex items-center justify-between mb-2">
@@ -608,7 +746,7 @@ export function DashboardPage({ onOpenNewProject, onOpenRoadmap }: DashboardPage
                     <TrendingUp className="w-3.5 h-3.5" />
                   </div>
                   <h3 className="text-xs font-bold text-slate-200 group-hover:text-cyan-300 transition-colors">
-                    Trending
+                    Trending Signals
                   </h3>
                 </div>
                 <span className="text-[10px] font-mono text-slate-500">Radar</span>
@@ -617,17 +755,16 @@ export function DashboardPage({ onOpenNewProject, onOpenRoadmap }: DashboardPage
                 Breakout search spikes and rapid keyword velocity clusters.
               </p>
             </div>
-            <div className="p-2.5 rounded-xl bg-slate-900/60 border border-slate-800 text-[11px] font-mono text-slate-400 flex items-center gap-1.5">
-              <ShieldAlert className="w-3 h-3 text-amber-400 shrink-0" />
-              <span className="truncate">Data connection not configured yet</span>
+            <div className="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 text-[11px] font-mono text-slate-400 flex items-center gap-1.5">
+              <ShieldAlert className="w-3 h-3 text-cyan-400 shrink-0" />
+              <span className="truncate">Sensors calibrating sub-space feed</span>
             </div>
           </div>
 
-          {/* 2. Rising Channels */}
           <div
             id="dash-intel-rising-channels"
             onClick={() => navigate('/youtube-intelligence/channel')}
-            className="p-5 rounded-2xl glass-panel border border-slate-800/80 hover:border-slate-700 transition-all cursor-pointer group space-y-3 flex flex-col justify-between"
+            className="p-5 rounded-2xl cockpit-panel-interactive transition-all cursor-pointer group space-y-3 flex flex-col justify-between"
           >
             <div>
               <div className="flex items-center justify-between mb-2">
@@ -645,17 +782,16 @@ export function DashboardPage({ onOpenNewProject, onOpenRoadmap }: DashboardPage
                 Creators experiencing explosive month-over-month subscriber acceleration.
               </p>
             </div>
-            <div className="p-2.5 rounded-xl bg-slate-900/60 border border-slate-800 text-[11px] font-mono text-slate-400 flex items-center gap-1.5">
-              <ShieldAlert className="w-3 h-3 text-amber-400 shrink-0" />
-              <span className="truncate">Data connection not configured yet</span>
+            <div className="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 text-[11px] font-mono text-slate-400 flex items-center gap-1.5">
+              <ShieldAlert className="w-3 h-3 text-indigo-400 shrink-0" />
+              <span className="truncate">Sensors calibrating sub-space feed</span>
             </div>
           </div>
 
-          {/* 3. Rising Videos */}
           <div
             id="dash-intel-rising-videos"
             onClick={() => navigate('/youtube-intelligence/video')}
-            className="p-5 rounded-2xl glass-panel border border-slate-800/80 hover:border-slate-700 transition-all cursor-pointer group space-y-3 flex flex-col justify-between"
+            className="p-5 rounded-2xl cockpit-panel-interactive transition-all cursor-pointer group space-y-3 flex flex-col justify-between"
           >
             <div>
               <div className="flex items-center justify-between mb-2">
@@ -673,93 +809,9 @@ export function DashboardPage({ onOpenNewProject, onOpenRoadmap }: DashboardPage
                 Fresh uploads gaining abnormal early traction across homepage feeds.
               </p>
             </div>
-            <div className="p-2.5 rounded-xl bg-slate-900/60 border border-slate-800 text-[11px] font-mono text-slate-400 flex items-center gap-1.5">
-              <ShieldAlert className="w-3 h-3 text-amber-400 shrink-0" />
-              <span className="truncate">Data connection not configured yet</span>
-            </div>
-          </div>
-
-          {/* 4. Opportunities */}
-          <div
-            id="dash-intel-opportunities"
-            onClick={() => navigate('/youtube-intelligence/strategy')}
-            className="p-5 rounded-2xl glass-panel border border-slate-800/80 hover:border-slate-700 transition-all cursor-pointer group space-y-3 flex flex-col justify-between"
-          >
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400">
-                    <Lightbulb className="w-3.5 h-3.5" />
-                  </div>
-                  <h3 className="text-xs font-bold text-slate-200 group-hover:text-cyan-300 transition-colors">
-                    Opportunities
-                  </h3>
-                </div>
-                <span className="text-[10px] font-mono text-slate-500">Strategy</span>
-              </div>
-              <p className="text-[11px] text-slate-400 leading-relaxed">
-                High-demand content gaps where audience interest outpaces creator supply.
-              </p>
-            </div>
-            <div className="p-2.5 rounded-xl bg-slate-900/60 border border-slate-800 text-[11px] font-mono text-slate-400 flex items-center gap-1.5">
-              <ShieldAlert className="w-3 h-3 text-amber-400 shrink-0" />
-              <span className="truncate">Data connection not configured yet</span>
-            </div>
-          </div>
-
-          {/* 5. Competitors */}
-          <div
-            id="dash-intel-competitors"
-            onClick={() => navigate('/youtube-intelligence/competitors')}
-            className="p-5 rounded-2xl glass-panel border border-slate-800/80 hover:border-slate-700 transition-all cursor-pointer group space-y-3 flex flex-col justify-between"
-          >
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-rose-500/10 flex items-center justify-center text-rose-400">
-                    <Crosshair className="w-3.5 h-3.5" />
-                  </div>
-                  <h3 className="text-xs font-bold text-slate-200 group-hover:text-cyan-300 transition-colors">
-                    Competitors
-                  </h3>
-                </div>
-                <span className="text-[10px] font-mono text-slate-500">Benchmark</span>
-              </div>
-              <p className="text-[11px] text-slate-400 leading-relaxed">
-                Local competitor tracking and side-by-side upload frequency audits.
-              </p>
-            </div>
-            <div className="p-2.5 rounded-xl bg-slate-900/60 border border-slate-800 text-[11px] font-mono text-slate-400 flex items-center gap-1.5">
-              <ShieldAlert className="w-3 h-3 text-amber-400 shrink-0" />
-              <span className="truncate">Data connection not configured yet</span>
-            </div>
-          </div>
-
-          {/* 6. Live Radar */}
-          <div
-            id="dash-intel-live-radar"
-            onClick={() => navigate('/youtube-intelligence/live')}
-            className="p-5 rounded-2xl glass-panel border border-slate-800/80 hover:border-slate-700 transition-all cursor-pointer group space-y-3 flex flex-col justify-between"
-          >
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400">
-                    <Radio className="w-3.5 h-3.5" />
-                  </div>
-                  <h3 className="text-xs font-bold text-slate-200 group-hover:text-cyan-300 transition-colors">
-                    Live Radar
-                  </h3>
-                </div>
-                <span className="text-[10px] font-mono text-slate-500">Broadcasts</span>
-              </div>
-              <p className="text-[11px] text-slate-400 leading-relaxed">
-                Concurrent viewer distributions and active live stream signals.
-              </p>
-            </div>
-            <div className="p-2.5 rounded-xl bg-slate-900/60 border border-slate-800 text-[11px] font-mono text-slate-400 flex items-center gap-1.5">
-              <ShieldAlert className="w-3 h-3 text-amber-400 shrink-0" />
-              <span className="truncate">Data connection not configured yet</span>
+            <div className="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 text-[11px] font-mono text-slate-400 flex items-center gap-1.5">
+              <ShieldAlert className="w-3 h-3 text-emerald-400 shrink-0" />
+              <span className="truncate">Sensors calibrating sub-space feed</span>
             </div>
           </div>
         </div>

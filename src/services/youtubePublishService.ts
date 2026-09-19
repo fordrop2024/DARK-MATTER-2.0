@@ -207,13 +207,13 @@ export function auditPrePublishCompliance(payload: YouTubePublishPayload): PrePu
  */
 export function getConnectedYouTubeChannel(): ConnectedYouTubeChannel {
   return {
-    channelId: 'UC_MINTMIND_STUDIO_90BC',
-    title: 'MintMind AI Official',
-    handle: '@MintMindAI',
+    channelId: 'UC_DARKMATTER_STUDIO_90BC',
+    title: 'DARK MATTER 2.0 Official',
+    handle: '@DarkMatterOS',
     avatarUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150&auto=format&fit=crop&q=80',
     subscribers: 54200,
     isConnected: true,
-    connectedEmail: 'creator@mintmind.ai',
+    connectedEmail: 'creator@darkmatter.ai',
     expiresAt: new Date(Date.now() + 86400000 * 30).toISOString(),
   };
 }

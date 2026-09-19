@@ -572,7 +572,7 @@ export function KineticCaptionStudio({ script, onNotification }: KineticCaptionS
                     Cinematic Stage
                   </span>
                   <span className="text-xs font-mono text-cyan-400/80 mt-1">
-                    {activeScene ? `Scene #${activeScene.sceneNumber}` : 'MintMind AI'}
+                    {activeScene ? `Scene #${activeScene.sceneNumber}` : 'DARK MATTER 2.0'}
                   </span>
                 </div>
               )}

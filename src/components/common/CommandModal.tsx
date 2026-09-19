@@ -144,7 +144,7 @@ export function CommandModal({ isOpen, onClose }: CommandModalProps) {
 
         {/* Footer */}
         <div className="px-4 py-2.5 bg-slate-950/80 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400 font-mono">
-          <span>MintMind AI OS Foundation</span>
+          <span>DARK MATTER 2.0 &bull; Flight Matrix Console</span>
           <span>Press Enter to select &bull; Esc to close</span>
         </div>
       </div>

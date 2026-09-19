@@ -28,10 +28,11 @@ import { YouTubeProvider } from './context/YouTubeContext';
 import { NewProjectModal } from './components/common/NewProjectModal';
 import { CommandModal } from './components/common/CommandModal';
 import { RoadmapModal } from './components/common/RoadmapModal';
-import { Cpu, Loader2 } from 'lucide-react';
+import { StarField } from './components/space/StarField';
+import { Cpu, Loader2, Sparkles } from 'lucide-react';
 
 function AppContent() {
-  const { currentRoute, navigate } = useRouter();
+  const { currentRoute, navigate, isWarping } = useRouter();
   const { theme } = useTheme();
   const { authState } = useAuth();
 
@@ -82,19 +83,32 @@ function AppContent() {
 
   if (authState === 'LOADING') {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-950 text-slate-100">
-        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500 to-indigo-600 p-0.5 shadow-2xl shadow-cyan-500/30 animate-pulse">
-          <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center">
-            <Cpu className="w-6 h-6 text-cyan-400" />
+      <div className="min-h-screen relative flex flex-col items-center justify-center bg-[#020409] text-slate-100 overflow-hidden">
+        <StarField />
+        <div className="relative z-10 flex flex-col items-center">
+          {/* Black Hole Event Horizon Loader */}
+          <div className="relative w-20 h-20 flex items-center justify-center mb-6">
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-500 via-indigo-600 to-cyan-400 animate-spin opacity-75 blur-md" />
+            <div className="absolute inset-1 rounded-full border border-cyan-400/40 animate-ping" />
+            <div className="relative w-14 h-14 rounded-full bg-[#020409] border border-cyan-500/80 flex items-center justify-center shadow-2xl">
+              <div className="w-5 h-5 rounded-full bg-cyan-400/20 border border-cyan-300 animate-pulse" />
+            </div>
           </div>
+
+          <div className="text-center space-y-1">
+            <span className="font-display font-black text-xl tracking-widest text-white flex items-center justify-center gap-2">
+              DARK MATTER <span className="text-cyan-400 font-mono text-base font-bold">2.0</span>
+            </span>
+            <p className="text-[10px] font-mono tracking-widest uppercase text-slate-400">
+              AI CONTENT PRODUCTION OS
+            </p>
+          </div>
+
+          <span className="text-xs text-slate-400 mt-6 font-mono flex items-center gap-2 bg-slate-900/80 px-3.5 py-1.5 rounded-full border border-slate-800">
+            <Loader2 className="w-3.5 h-3.5 animate-spin text-cyan-400" />
+            Calibrating sub-space telemetry...
+          </span>
         </div>
-        <span className="font-display font-bold text-sm tracking-wider text-white mt-4 flex items-center gap-1.5">
-          MintMind <span className="text-cyan-400 text-xs font-mono font-normal">AI</span>
-        </span>
-        <span className="text-xs text-slate-500 mt-1 font-mono flex items-center gap-1.5">
-          <Loader2 className="w-3 h-3 animate-spin text-cyan-400" />
-          Connecting security session...
-        </span>
       </div>
     );
   }
@@ -141,7 +155,21 @@ function AppContent() {
       case '/ideas':
         return <IdeaGeneratorPage />;
       case '/script':
-        return <ScriptStudioPage />;
+      case '/editor':
+        return <ScriptStudioPage initialTab="editor" />;
+      case '/video-generator':
+      case '/image-studio':
+        return <ScriptStudioPage initialTab="media" />;
+      case '/voice':
+        return <ScriptStudioPage initialTab="voice" />;
+      case '/thumbnail':
+        return <ScriptStudioPage initialTab="thumbnails" />;
+      case '/seo':
+        return <ScriptStudioPage initialTab="seo" />;
+      case '/repurpose':
+        return <ScriptStudioPage initialTab="repurpose" />;
+      case '/youtube':
+        return <ScriptStudioPage initialTab="publish" />;
       default:
         return (
           <PlaceholderPage
@@ -155,17 +183,21 @@ function AppContent() {
   return (
     <div
       id="creova-app-root"
-      className={`min-h-screen flex text-slate-100 cyber-grid transition-colors duration-300 ${
-        theme === 'light' ? 'bg-slate-50 text-slate-900' : 'bg-[#07090e] text-slate-100'
+      data-app-identity="dark-matter-2.0"
+      className={`min-h-screen relative flex text-slate-100 transition-colors duration-300 ${
+        theme === 'light' ? 'bg-slate-50 text-slate-900' : 'bg-[#020409] text-slate-100'
       }`}
     >
+      {/* Spacecraft Deep Space Background Canvas with Warp Speed Trajectory */}
+      <StarField isWarping={isWarping} />
+
       <Sidebar
         isCollapsed={isSidebarCollapsed}
         onToggleCollapse={handleToggleSidebar}
         onOpenRoadmap={() => setIsRoadmapModalOpen(true)}
       />
 
-      <div className="flex-1 flex flex-col min-w-0 min-h-screen">
+      <div className="flex-1 flex flex-col min-w-0 min-h-screen relative z-10">
         <TopBar
           onOpenCommand={() => setIsCommandModalOpen(true)}
           onOpenNewProject={() => setIsNewProjectModalOpen(true)}

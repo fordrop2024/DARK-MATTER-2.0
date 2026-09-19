@@ -60,13 +60,13 @@ export function RoadmapModal({ isOpen, onClose }: RoadmapModalProps) {
             </div>
             <div>
               <h2 className="text-xl font-bold tracking-tight text-slate-100 font-display flex items-center gap-2">
-                MintMind Creator Pipeline
+                Dark Matter Production Warp Pipeline
                 <span className="text-xs px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 font-mono border border-cyan-500/30">
-                  17-Step Roadmap
+                  17-Step Trajectory
                 </span>
               </h2>
               <p className="text-xs text-slate-400">
-                Architectural blueprint of the AI Content Operating System
+                Architectural flight blueprint of the DARK MATTER 2.0 Spacecraft OS
               </p>
             </div>
           </div>
@@ -145,7 +145,7 @@ export function RoadmapModal({ isOpen, onClose }: RoadmapModalProps) {
 
         {/* Footer */}
         <div className="px-6 py-3.5 bg-slate-950/80 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
-          <span>MintMind AI &mdash; Content Operating System</span>
+          <span>DARK MATTER 2.0 &mdash; AI Content Production OS</span>
           <button
             onClick={onClose}
             className="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold transition-colors"

@@ -71,7 +71,7 @@ export function StrategyAnalyzerPage() {
       <div className="p-6 rounded-3xl glass-panel border border-cyan-500/30 bg-gradient-to-r from-cyan-950/40 via-indigo-950/30 to-slate-950/60 relative overflow-hidden space-y-2">
         <div className="flex items-center gap-2 text-cyan-300 font-semibold text-xs">
           <ShieldCheck className="w-4 h-4 text-cyan-400" />
-          <span>MintMind Creator Creed</span>
+          <span>Dark Matter Creator Creed</span>
         </div>
         <p className="text-base md:text-lg font-bold text-white font-display">
           &ldquo;Learn from market patterns and create an original strategy.&rdquo;
@@ -132,7 +132,7 @@ export function StrategyAnalyzerPage() {
       {/* Global Status Banner */}
       <IntelligenceEmptyState
         title="Strategy synthesis data connection not configured yet."
-        description="When YouTube Data API access is active, MintMind AI will run clustering across titles, release schedules, and video retention curves to distill an original content blueprint."
+        description="When YouTube Data API access is active, Dark Matter AI will run clustering across titles, release schedules, and video retention curves to distill an original content blueprint."
       />
 
       {/* Prepared Output Sections (9 Comprehensive Modules) */}

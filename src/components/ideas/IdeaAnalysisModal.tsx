@@ -36,7 +36,7 @@ export function IdeaAnalysisModal({
               <h3 className="text-sm font-bold text-white flex items-center gap-2">
                 Idea Strategic Intelligence Audit
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
-                  MintMind Engine
+                  Dark Matter Neural Core
                 </span>
               </h3>
               <p className="text-xs text-slate-400 truncate max-w-md">{idea.title}</p>

@@ -12,10 +12,12 @@ import {
   Sun,
   CheckCircle2,
   ExternalLink,
+  Rocket,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useRouter } from '../context/RouterContext';
 import { useTheme } from '../context/ThemeContext';
+import { StarField } from '../components/space/StarField';
 
 export function LoginPage() {
   const {
@@ -76,23 +78,23 @@ export function LoginPage() {
 
   return (
     <div
-      id="creova-login-page"
-      className="min-h-screen flex flex-col justify-between p-4 md:p-8 bg-slate-950 text-slate-100 relative overflow-hidden"
+      id="login-page"
+      className="min-h-screen flex flex-col justify-between p-4 md:p-8 bg-[#020409] text-slate-100 relative overflow-hidden"
     >
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-cyan-500/10 via-indigo-600/10 to-transparent rounded-full blur-3xl pointer-events-none" />
+      {/* Spacecraft Deep Space Background Canvas */}
+      <StarField />
 
       {/* Top Header Controls */}
       <div className="w-full max-w-6xl mx-auto flex items-center justify-between z-10">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-500 to-indigo-600 p-0.5 shadow-lg shadow-cyan-500/20">
-            <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-              <Cpu className="w-5 h-5 text-cyan-400" />
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-500 to-indigo-600 p-0.5 shadow-lg shadow-cyan-500/30">
+            <div className="w-full h-full bg-[#020409] rounded-[10px] flex items-center justify-center">
+              <Rocket className="w-4 h-4 text-cyan-400" />
             </div>
           </div>
           <div>
-            <span className="font-display font-extrabold text-lg tracking-wider text-white flex items-center gap-1.5">
-              MintMind <span className="text-cyan-400 text-xs font-mono font-normal">AI</span>
+            <span className="font-display font-black text-lg tracking-widest text-white flex items-center gap-1.5">
+              DARK MATTER <span className="text-cyan-400 text-xs font-mono font-bold">2.0</span>
             </span>
           </div>
         </div>
@@ -134,19 +136,19 @@ export function LoginPage() {
 
       {/* Main Authentication Card */}
       <div className="w-full max-w-md mx-auto my-auto z-10 py-10">
-        <div className="rounded-3xl glass-panel border border-slate-800/80 bg-slate-900/60 shadow-2xl p-8 backdrop-blur-xl relative">
+        <div className="rounded-3xl glass-panel border border-cyan-500/30 bg-[#060914]/90 shadow-2xl p-8 backdrop-blur-xl relative">
           {/* Header */}
           <div className="text-center space-y-2 mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono">
               <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-              <span>MintMind OS &bull; Auth Gateway</span>
+              <span>COMMAND ACCESS &bull; FLIGHT GATEWAY</span>
             </div>
 
             <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-white font-display">
-              Welcome to MintMind AI
+              Welcome to DARK MATTER 2.0
             </h1>
             <p className="text-xs text-slate-400 max-w-xs mx-auto">
-              AI Content Operating System &bull; Think. Create. Publish.
+              AI Content Production OS &bull; Think. Create. Produce. Flight Ops.
             </p>
           </div>
 
@@ -247,7 +249,7 @@ export function LoginPage() {
 
       {/* Bottom Footer */}
       <div className="w-full max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-2 z-10">
-        <div>&copy; {new Date().getFullYear()} MintMind AI &bull; AI Content Operating System &bull; Think. Create. Publish.</div>
+        <div>&copy; {new Date().getFullYear()} DARK MATTER 2.0 &bull; AI Content Production OS &bull; Think. Create. Produce. Flight Ops.</div>
         <div className="flex items-center gap-4 text-[11px] font-mono">
           <span className="flex items-center gap-1.5 text-emerald-400">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />

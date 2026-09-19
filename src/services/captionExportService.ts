@@ -84,7 +84,7 @@ export function generateJSONExport(
   scriptTitle?: string
 ): string {
   const exportPayload = {
-    generator: 'MintMind AI Caption Engine',
+    generator: 'DARK MATTER 2.0 AI Caption Engine',
     version: '2.0',
     exportedAt: new Date().toISOString(),
     title: scriptTitle || 'Video Captions',
